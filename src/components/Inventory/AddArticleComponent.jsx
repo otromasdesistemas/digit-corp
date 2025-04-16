@@ -1,4 +1,5 @@
 import { useState } from "react";
+import '../Inventory/styles.scss'
 
 export const AddArticleComponent = ({ addArticle }) => {
     const [formData, setFormData] = useState({
@@ -19,43 +20,45 @@ export const AddArticleComponent = ({ addArticle }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         addArticle(formData); // Pasan los datos del formulario al componente padre
-        setFormData({name: "", quantity: null, minStock: null}) // Limpieza del formulario después de enviar
+        setFormData({ name: "", quantity: null, minStock: null }) // Limpieza del formulario después de enviar
     }
 
     return (
         <>
             <form className="panel-add-article" onSubmit={handleSubmit}>
-                <div className="article-name">
-                    <p>Article Name</p>
-                    <input
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        placeholder="Enter the name of the article"
-                    />
-                </div>
+                <div className="article-articles">
+                    <div className="article-name">
+                        <p>Article Name</p>
+                        <input
+                            type="text"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            placeholder="Enter the name of the article"
+                        />
+                    </div>
 
-                <div className="article-quantity">
-                    <p>Quantity</p>
-                    <input
-                        type="number"
-                        name="quantity"
-                        value={formData.quantity}
-                        onChange={handleChange}
-                        placeholder="Enter the Quantity"
-                    />
-                </div>
+                    <div className="article-quantity">
+                        <p>Quantity</p>
+                        <input
+                            type="number"
+                            name="quantity"
+                            value={formData.quantity}
+                            onChange={handleChange}
+                            placeholder="Enter the Quantity"
+                        />
+                    </div>
 
-                <div className="article-min-stock">
-                    <p>Minimum Stock</p>
-                    <input
-                        type="number"
-                        name="minStock"
-                        value={formData.minStock}
-                        placeholder="Enter the minimum stock"
-                        onChange={handleChange}
-                    />
+                    <div className="article-min-stock">
+                        <p>Minimum Stock</p>
+                        <input
+                            type="number"
+                            name="minStock"
+                            value={formData.minStock}
+                            placeholder="Enter the minimum stock"
+                            onChange={handleChange}
+                        />
+                    </div>
                 </div>
                 <button className="article-addBtn" type="submit">+ Add Article</button>
             </form>

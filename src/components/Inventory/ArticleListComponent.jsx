@@ -1,4 +1,6 @@
-export const ArticleListComponent = ({ articles }) => {
+import '../Inventory/styles.scss'
+export const ArticleListComponent = ({ articles, updateArticle, deleteArticle }) => {
+
     return (
         <article className="list-article">
             <table>
@@ -8,6 +10,7 @@ export const ArticleListComponent = ({ articles }) => {
                         <th>Quantity</th>
                         <th>Minimum Stock</th>
                         <th>State</th>
+                        <th>Modify / Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -16,7 +19,11 @@ export const ArticleListComponent = ({ articles }) => {
                             <td>{article.name}</td>
                             <td>{article.quantity}</td>
                             <td>{article.minStock}</td>
-                            <td>{article.quantity >= article.minStock ? <p className="article-inStock">In Stock</p> : <p className="article-lowStock">Low Stock</p>}</td>
+                            <td className='list-stock'>{article.quantity >= article.minStock ? <button className="article-inStock">In Stock</button> : <button className="article-lowStock">Low Stock</button>}</td>
+                            <td className='list-options'>
+                                <button>📝</button>
+                                <button onClick={() => deleteArticle(index)}>❌</button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
