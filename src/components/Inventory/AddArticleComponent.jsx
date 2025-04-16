@@ -1,12 +1,14 @@
-import { useState } from "react";
-import '../Inventory/styles.scss'
+import { useRef, useState } from "react";
+import '../Header/styles.scss'
 
 export const AddArticleComponent = ({ addArticle }) => {
     const [formData, setFormData] = useState({
         name: "",
-        quantity: null,
-        minStock: null,
+        quantity: "",
+        minStock: "",
     });
+
+    const addBtn = useRef(null);
 
     const handleChange = (e) => {
         const { name, value, type } = e.target;
@@ -19,8 +21,14 @@ export const AddArticleComponent = ({ addArticle }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        addArticle(formData); // Pasan los datos del formulario al componente padre
-        setFormData({ name: "", quantity: null, minStock: null }) // Limpieza del formulario después de enviar
+        addArticle(formData);
+        setFormData({ name: "", quantity: "", minStock: "" });
+    }
+
+    const handleKeyDown = (e) => {
+        if(e.key == 'Enter') {
+            addBtn.current.focus();
+        }
     }
 
     return (
@@ -34,6 +42,7 @@ export const AddArticleComponent = ({ addArticle }) => {
                             name="name"
                             value={formData.name}
                             onChange={handleChange}
+                            onKeyDown={handleKeyDown}
                             placeholder="Enter the name of the article"
                         />
                     </div>
@@ -45,6 +54,7 @@ export const AddArticleComponent = ({ addArticle }) => {
                             name="quantity"
                             value={formData.quantity}
                             onChange={handleChange}
+                            onKeyDown={handleKeyDown}
                             placeholder="Enter the Quantity"
                         />
                     </div>
@@ -55,12 +65,13 @@ export const AddArticleComponent = ({ addArticle }) => {
                             type="number"
                             name="minStock"
                             value={formData.minStock}
+                            onKeyDown={handleKeyDown}
                             placeholder="Enter the minimum stock"
                             onChange={handleChange}
                         />
                     </div>
                 </div>
-                <button className="article-addBtn" type="submit">+ Add Article</button>
+                <button className="article-addBtn" type="submit" ref={addBtn}>+ Add Article</button>
             </form>
 
         </>
