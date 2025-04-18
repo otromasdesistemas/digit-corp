@@ -4,15 +4,19 @@ import { ArticleListComponent } from "./ArticleListComponent"
 import '../Inventory/styles.scss'
 import 'normalize.css';
 import { HeaderComponent } from "../Header/HeaderComponent";
+import { ModalComponent } from "../Modal/ModalComponent";
 
 export const InventoryComponent = () => {
   const [articles, setArticles] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedArticle, setSelectedArticle] = useState(null);
+  const [formData, setFormData] = useState({
+    name: "",
+    quantity: "",
+    minStock: ""
+  });
 
   const addArticle = (newArticle) => {
-    if (!newArticle.name || !newArticle.quantity || !newArticle.minStock) {
-      alert("Debes completar todos los datos para agregar un articulo a la lista.")
-      return;
-    }
     if (newArticle.quantity > 99999999 || newArticle.minStock > 99999999) {
       alert("Excedes el limite máximo")
       return;
@@ -24,9 +28,43 @@ export const InventoryComponent = () => {
     setArticles((prevArticles) => [...prevArticles, newArticle]);
   }
 
-  // updateArticle = (articles) => {
+  const openModal2Edit = (article) => {
+    setSelectedArticle({...article});
+    setFormData({
+      name: article.name || "",
+      quantity: article.quantity !== undefined ? String(article.quantity) : "",
+      minStock: article.minStock !== undefined ? String(article.minStock) : ""
+    });
+    setIsModalOpen(true);
+  }
 
-  // }
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  }
+
+  const handleUpdate = () => {
+    const updateArticles = articles.map((article) =>
+      article.name === selectedArticle.name
+      ? {
+        ...article,
+        name: formData.name,
+        quantity: parseInt(formData.quantity),
+        minStock: parseInt(formData.minStock)
+      }
+      : article
+    );
+    setArticles(updateArticles)
+    closeModal();
+  }
+
+  const closeModal = () => {
+    setIsModalOpen(false)
+    setSelectedArticle(null);
+  }
 
   const deleteArticle = (index) => {
     const updated = articles.filter((_, i) => i !== index);
@@ -45,8 +83,46 @@ export const InventoryComponent = () => {
           <ArticleListComponent
             articles={articles}
             deleteArticle={deleteArticle}
+            updateArticle={openModal2Edit}
           ></ArticleListComponent>
         </section>
+
+        {isModalOpen && selectedArticle && (
+        <ModalComponent onClose={closeModal}>
+          <div className="modal-form">
+            <h3>You Are Editing the Article: {selectedArticle?.name}</h3>
+
+            <label htmlFor="name">Article Name</label>
+            <input 
+            type="text" 
+            id="name" 
+            name="name" 
+            value={formData.name}
+            onChange={handleInputChange}
+            placeholder={selectedArticle.name}
+            />
+
+            <label htmlFor="name">Quantity</label>
+            <input 
+            type="number" 
+            id="quantity" 
+            name="quantity" 
+            value={formData.quantity}
+            onChange={handleInputChange}
+            />
+
+            <label htmlFor="minStock">Minimun Stock</label>
+            <input 
+            type="number" 
+            id="minStock" 
+            name="minStock" 
+            value={formData.minStock}
+            onChange={handleInputChange}
+            />
+            <button onClick={handleUpdate}>Save Changes</button>
+          </div>
+        </ModalComponent>
+      )}
       </main>
     </>
   )

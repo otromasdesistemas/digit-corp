@@ -21,7 +21,7 @@ export const ArticleListComponent = ({ articles, updateArticle, deleteArticle })
                             <td>{article.minStock}</td>
                             <td className='list-stock'>{article.quantity >= article.minStock ? <button className="article-inStock">In Stock</button> : <button className="article-lowStock">Low Stock</button>}</td>
                             <td className='list-options'>
-                                <button>📝</button>
+                                <button onClick={() => updateArticle(article)}>📝</button>
                                 <button onClick={() => deleteArticle(index)}>❌</button>
                             </td>
                         </tr>

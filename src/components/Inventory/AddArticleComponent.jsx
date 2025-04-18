@@ -44,6 +44,7 @@ export const AddArticleComponent = ({ addArticle }) => {
                             onChange={handleChange}
                             onKeyDown={handleKeyDown}
                             placeholder="Enter the name of the article"
+                            required
                         />
                     </div>
 
@@ -56,6 +57,7 @@ export const AddArticleComponent = ({ addArticle }) => {
                             onChange={handleChange}
                             onKeyDown={handleKeyDown}
                             placeholder="Enter the Quantity"
+                            required
                         />
                     </div>
 
@@ -68,6 +70,7 @@ export const AddArticleComponent = ({ addArticle }) => {
                             onKeyDown={handleKeyDown}
                             placeholder="Enter the minimum stock"
                             onChange={handleChange}
+                            required
                         />
                     </div>
                 </div>
