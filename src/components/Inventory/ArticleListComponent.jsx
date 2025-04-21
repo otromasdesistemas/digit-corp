@@ -1,5 +1,9 @@
 import '../Inventory/styles.scss'
-export const ArticleListComponent = ({ articles, updateArticle, deleteArticle }) => {
+export const ArticleListComponent = ({
+    articles = [], 
+    updateArticle, 
+    deleteArticle
+}) => {
 
     return (
         <article className="list-article">

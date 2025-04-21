@@ -21,8 +21,17 @@ export const AddArticleComponent = ({ addArticle }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        addArticle(formData);
-        setFormData({ name: "", quantity: "", minStock: "" });
+        addArticle({
+            name: formData.name,
+            quantity: parseInt(formData.quantity),
+            minStock: parseInt(formData.minStock),
+        });
+
+        setFormData({
+            name: "",
+            quantity: "",
+            minStock: ""
+        })
     }
 
     const handleKeyDown = (e) => {
@@ -40,6 +49,7 @@ export const AddArticleComponent = ({ addArticle }) => {
                         <input
                             type="text"
                             name="name"
+                            id="name"
                             value={formData.name}
                             onChange={handleChange}
                             onKeyDown={handleKeyDown}
@@ -53,6 +63,7 @@ export const AddArticleComponent = ({ addArticle }) => {
                         <input
                             type="number"
                             name="quantity"
+                            id="quantity"
                             value={formData.quantity}
                             onChange={handleChange}
                             onKeyDown={handleKeyDown}
@@ -66,10 +77,11 @@ export const AddArticleComponent = ({ addArticle }) => {
                         <input
                             type="number"
                             name="minStock"
+                            id="minStock"
                             value={formData.minStock}
+                            onChange={handleChange}
                             onKeyDown={handleKeyDown}
                             placeholder="Enter the minimum stock"
-                            onChange={handleChange}
                             required
                         />
                     </div>

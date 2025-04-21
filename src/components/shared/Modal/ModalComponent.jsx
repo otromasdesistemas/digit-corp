@@ -1,4 +1,4 @@
-import '../Modal/styles.scss';
+import './styles.scss';
 
 export const ModalComponent = ({onClose, children}) => {
   return (
