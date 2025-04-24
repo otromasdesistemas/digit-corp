@@ -1,4 +1,6 @@
 import '../Sales/styles.scss'
+import { formatCurrency } from '../../utils/formatter';
+
 export const SaleListComponent = ({
     sales= [],
     deleteSale,
@@ -9,6 +11,7 @@ export const SaleListComponent = ({
             <table>
                 <thead>
                     <tr>
+                        <th>Date</th>
                         <th>Client</th>
                         <th>Product</th>
                         <th>Quantity</th>
@@ -19,13 +22,14 @@ export const SaleListComponent = ({
                 <tbody>
                     {sales.map((sale, index) => (
                         <tr key={index}>
+                            <td>{sale.date}</td>
                             <td>{sale.clientName}</td>
                             <td>{sale.product}</td>
                             <td>{sale.quantity}</td>
-                            <td>${sale.amount}</td>
+                            <td>{formatCurrency(sale.amount)}</td>
                             <td className='list-options'>
                                 <button onClick={() => updateSale(sale)}>📝</button>
-                                <button onClick={() => deleteSale(index)}>❌</button>
+                                <button onClick={() => deleteSale(sale.id)}>❌</button>
                             </td>
                         </tr>
                     ))}

@@ -9,10 +9,10 @@ export const HeaderComponent = () => {
 
         <nav className="nav-list">
             <ul>
-                <li><Link to={'/'}>Overview</Link></li>
+                <li><Link to={'/overview'}>Overview</Link></li>
                 <li><Link to={'/inventory'}>Inventory</Link></li>
                 <li><Link to={'/sales'}>Sales</Link></li>
-                <li><Link to={''}>Expenses</Link></li>
+                <li><Link to={'/expenses'}>Expenses</Link></li>
                 <li><Link to={''}>Customers</Link></li>
                 <li><Link to={''}>Reports</Link></li>
                 <li><Link to={''}>Configuration</Link></li>

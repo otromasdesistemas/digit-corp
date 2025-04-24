@@ -14,8 +14,8 @@ export const SalesPanelComponent = () => {
     <AddSalesComponent
       addSale={(newSale) => {
         addItem(newSale);
-        setSales(prev => [...prev, newSale]); 
       }}
+      sales={sales}
     />
   );
 
@@ -67,6 +67,15 @@ export const SalesPanelComponent = () => {
           onChange={handleInputChange}
         />
 
+        <label htmlFor="date">Date</label>
+        <input
+          type="date"
+          id="date"
+          name="date"
+          value={formData.date}
+          onChange={handleInputChange}
+        />
+
         <button onClick={handleUpdate}>Save Changes</button>
       </div>
     </ModalComponent>
@@ -83,6 +92,7 @@ export const SalesPanelComponent = () => {
           tableComponent={renderTable}
           modalFormComponent={renderModal}
           initialData={sales}
+          onUpdate={setSales}
           getItemKey={(item) => item.clientName}
         />
       </main>

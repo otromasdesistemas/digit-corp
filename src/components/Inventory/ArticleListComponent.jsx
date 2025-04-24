@@ -1,4 +1,5 @@
 import '../Inventory/styles.scss'
+
 export const ArticleListComponent = ({
     articles = [], 
     updateArticle, 
@@ -26,7 +27,7 @@ export const ArticleListComponent = ({
                             <td className='list-stock'>{article.quantity >= article.minStock ? <button className="article-inStock">In Stock</button> : <button className="article-lowStock">Low Stock</button>}</td>
                             <td className='list-options'>
                                 <button onClick={() => updateArticle(article)}>📝</button>
-                                <button onClick={() => deleteArticle(index)}>❌</button>
+                                <button onClick={() => deleteArticle(article.id)}>❌</button>
                             </td>
                         </tr>
                     ))}

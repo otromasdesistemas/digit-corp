@@ -21,11 +21,13 @@ export const AddArticleComponent = ({ addArticle }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        addArticle({
+        const newArticle = ({
             name: formData.name,
             quantity: parseInt(formData.quantity),
             minStock: parseInt(formData.minStock),
         });
+
+        addArticle(newArticle);
 
         setFormData({
             name: "",

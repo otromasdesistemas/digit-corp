@@ -1,11 +1,14 @@
 import { useRef, useState } from "react"
 
 export const AddSalesComponent = ({ addSale }) => {
+  const today = new Date().toISOString().split('T')[0];
+
   const [formData, setFormData] = useState({
     clientName: "",
     product: "",
     quantity: "",
     amount: "",
+    date: today
   })
 
   const addBtn = useRef(null);
@@ -21,18 +24,22 @@ export const AddSalesComponent = ({ addSale }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addSale({
+    const newSale = ({
       clientName: formData.clientName,
       product: formData.product,
       quantity: parseInt(formData.quantity),
-      amount: parseFloat(formData.amount)
+      amount: parseFloat(formData.amount),
+      date: formData.date,
     });
+
+    addSale(newSale);
 
     setFormData({
       clientName: "",
       product: "",
       quantity: "",
       amount: "",
+      date: today
   })
   }
 
@@ -98,6 +105,20 @@ export const AddSalesComponent = ({ addSale }) => {
                     onChange={handleChange}
                     onKeyDown={handleKeyDown}
                     placeholder="Enter the Mount"
+                    required
+                    />
+                </div>
+
+                <div className="sale-date">
+                    <p>Date</p>
+                    <input 
+                    type="date" 
+                    name="date"
+                    id="date"
+                    value={formData.date}
+                    onChange={handleChange}
+                    onKeyDown={handleKeyDown}
+                    placeholder="Enter the Date"
                     required
                     />
                 </div>

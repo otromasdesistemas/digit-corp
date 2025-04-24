@@ -5,11 +5,16 @@ import { ModalComponent } from "../shared/Modal/ModalComponent";
 import '../Inventory/styles.scss'
 import 'normalize.css';
 import { CrudPanelComponent } from "../shared/CrudPanel/CrudPanelComponent";
+import { useState } from "react";
 
 export const InventoryComponent = () => {
+  const [articles, setArticles] = useState([]);
   
   const renderForm = ({addItem}) => (
-    <AddArticleComponent addArticle={addItem}/>
+    <AddArticleComponent 
+    addArticle={(newArticle) => {
+      addItem(newArticle);
+    }}/>
   );
 
   const renderTable = ({ items, deleteItem, updateItem }) => (
@@ -64,13 +69,14 @@ export const InventoryComponent = () => {
       <HeaderComponent></HeaderComponent>
       <main>
         <CrudPanelComponent 
-          initialData={[]}
+          initialData={articles}
           title= "Inventory Managment"
           subtitle= "Control and manage your inventory items."
           formComponent ={renderForm}
           tableComponent = {renderTable}
           modalFormComponent = {renderModal}
           getItemKey = {(item) => item.name}
+          onUpdate={setArticles}
         />
       </main>
     </>

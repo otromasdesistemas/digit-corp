@@ -7,20 +7,21 @@ export const CrudPanelComponent = ({
     tableComponent,
     modalFormComponent,
     initialData = [],
+    onUpdate,
     getItemKey = (item) => item.name,
     fields = ['name', 'quantity', 'minStock'],
 }) => {
-    const [items, setItems] = useState(initialData);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedItem, setSelectedItem] = useState(null)
+    const [selectedItem, setSelectedItem] = useState(null);
     const [formData, setFormData] = useState({});
+    const items = initialData;
 
     const addItem = (newItem) => {
         if (items.find(item => getItemKey(item) === getItemKey(newItem))) {
             alert(`El item: ${newItem.clientName !== undefined ? newItem.clientName : newItem.name} ya existe!`);
             return;
         }
-        setItems((prev) => [...prev, newItem]);
+        onUpdate([...items, newItem]);
     };
 
     const openModal2Edit = (item) => {
@@ -46,32 +47,26 @@ export const CrudPanelComponent = ({
     const handleUpdate = () => {
         const updatedItems = items.map((item) => {
             if (getItemKey(item) === getItemKey(selectedItem)) {
-                const updatedFields = {};
-
-                // Convert to num fields
-                Object.keys(formData).forEach((key) => {
-                    if (typeof item[key] === 'number') {
-                        updatedFields[key] = formData[key] ? Number(formData[key]) : item[key];
-                    } else {
-                        updatedFields[key] = formData[key];
-                    }
-                });
-
                 return {
                     ...item,
-                    ...updatedFields
+                    ...Object.fromEntries(
+                        Object.entries(formData).map(([key, val]) => [
+                            key,
+                            typeof item[key] === 'number' ? Number(val) : val
+                        ])
+                    )
                 };
             }
             return item;
         });
 
-        setItems(updatedItems)
+        onUpdate(updatedItems);
         closeModal();
     };
 
-    const deleteItem = (index) => {
-        const updated = items.filter((_, i) => i !== index);
-        setItems(updated);
+    const deleteItem = (id) => {
+        const updated = items.filter(item => item.id !== id);
+        onUpdate(updated);
     }
 
     const closeModal = () => {
